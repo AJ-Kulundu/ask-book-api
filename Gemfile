@@ -15,6 +15,7 @@ gem "puma", "~> 5.0"
 # Imported Libraries
 gem "dotenv"
 gem "pg"
+gem "httparty"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
