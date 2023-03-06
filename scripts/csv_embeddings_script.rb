@@ -32,7 +32,7 @@ end
 
 def create_csv_file()
     tokens = get_tokens("microsoft-earnings.csv")
-    puts "This will take a few minutes..."
+    puts "Creating csv file, this may take a while..."
     CSV.open("embeddings.csv", "wb") do |csv|
         csv<<["index","token","embeddings"]
         tokens.each_with_index do |token, index|
