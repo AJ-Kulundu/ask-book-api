@@ -5,17 +5,31 @@ Dotenv.load
 
 class Api::V1::QuestionsController < ApplicationController
     def index
-       embeddings =  load_embeddings("embeddings.csv")
-       similar = order_document_sections_by_similarity("What is microsoft doing in cloud computing?", embeddings)
-       render json: similar
+       question = Question.all
+       render json: question
     end
 
     def create
         embeddings =  load_embeddings("embeddings.csv")
-        question  = question_params[:question]
-        answer,context = answer_query_with_context(question, embeddings)
+        question_string  = question_params[:question].strip #remove whitespaces
+        if !(question_string.end_with?("?"))
+            question_string = question_string + "?"
+        end
 
-        render json: {answer: answer, context: context.join(" ")}
+        question_exist = Question.exists?(question: question_string)
+        if question_exist
+            question = Question.where(question: question_string).first
+            question.increment!(:ask_count)
+            render json: question
+        else
+            answer,context = answer_query_with_context(question_string, embeddings)
+            question = Question.create(question: question_string, answer: answer,context: context)
+            if question.save
+                render json: question
+            else
+                render json: {error: question.errors}, status: :unprocessable_entity
+            end
+        end
     end
 
     private
@@ -82,7 +96,7 @@ class Api::V1::QuestionsController < ApplicationController
        end
        header = "Answer the following question based on the context provided and if the answer isn\'t provided within the context say \" I don\'t know\". Please keep your answers to 4 sentences maximum, and speak in complete sentences. Stopspeaking once your point is made. \n \n"
        prompt = header+ "Context: \n\n" + context.join(" ") + "\n\nQ: "+question+ "\n\n A: "
-       return prompt, context
+       return prompt, context.join(" ")
     end
 
     def answer_query_with_context(question,embeddings)
