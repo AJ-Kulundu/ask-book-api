@@ -70,6 +70,7 @@ GEM
       msgpack (~> 1.2)
     builder (3.2.4)
     concurrent-ruby (1.2.2)
+    cosine-similarity (1.0.0)
     crass (1.0.6)
     date (3.3.3)
     debug (1.7.1)
@@ -166,6 +167,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  cosine-similarity
   debug
   dotenv
   httparty
