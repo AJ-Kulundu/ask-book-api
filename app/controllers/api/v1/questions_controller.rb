@@ -87,7 +87,7 @@ class Api::V1::QuestionsController < ApplicationController
        context = []
        count = 0 
        relevant_documents.each do |document|
-          if count < 2
+          if count < 3
           context << document[1][1]
           count += 1
           else
