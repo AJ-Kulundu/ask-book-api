@@ -38,3 +38,5 @@
 
 # Other files
 embeddings.csv
+*.rest
+*.http
