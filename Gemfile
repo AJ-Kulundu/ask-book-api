@@ -19,6 +19,7 @@ gem "httparty"
 gem "cosine-similarity"
 gem "pdf-reader"
 gem "open-uri"
+gem "rack-cors"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
