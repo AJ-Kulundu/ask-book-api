@@ -5,8 +5,10 @@ Dotenv.load
 
 class Api::V1::QuestionsController < ApplicationController
     def index
-       question = Question.all
-       render json: question
+       @question = Rails.cache.fetch("questions", expires_in: 1.hour) do
+       Question.order("ask_count DESC").limit(5)
+       end
+       render json: @question
     end
 
     def create
