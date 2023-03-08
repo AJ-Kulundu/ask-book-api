@@ -6,11 +6,11 @@
 #
 default: &default
   adapter: postgresql
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] %>
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['PGHOST'] %>
+  port: <%= ENV['PGPORT'] %>
+  database: <%= ENV['PGNAME'] %>
+  username: <%= ENV['PGUSERNAME'] %>
+  password: <%= ENV['PGPASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
@@ -25,3 +25,4 @@ test:
 
 production:
   <<: *default
+  url: <%=ENV['DATABASE_URL'] %>
