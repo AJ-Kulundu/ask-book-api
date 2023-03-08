@@ -5,9 +5,7 @@ Dotenv.load
 
 class Api::V1::QuestionsController < ApplicationController
     def index
-       @question = Rails.cache.fetch("questions", expires_in: 1.hour) do
-       Question.order("ask_count DESC").limit(5)
-       end
+       @question = Question.order("ask_count DESC").limit(5)
        render json: @question
     end
 
@@ -20,16 +18,18 @@ class Api::V1::QuestionsController < ApplicationController
 
         question_exist = Question.exists?(question: question_string)
         if question_exist
-            question = Question.where(question: question_string).first
-            question.increment!(:ask_count)
-            render json: question
+            @question = Rails.cache.fetch("questions", expires_in: 5.minute) do
+            Question.where(question: question_string).first
+            end
+            @question.increment!(:ask_count)
+            render json: {answer:@question.answer}
         else
             answer,context = answer_query_with_context(question_string, embeddings)
-            question = Question.create(question: question_string, answer: answer,context: context)
-            if question.save
-                render json: question
+            @question = Question.create(question: question_string, answer: answer,context: context)
+            if @question.save
+                render json: {answer:@question.answer}
             else
-                render json: {error: question.errors}, status: :unprocessable_entity
+                render json: {error: @question.errors}, status: :unprocessable_entity
             end
         end
     end
