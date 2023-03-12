@@ -117,6 +117,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.14.2-x64-mingw-ucrt)
       racc (~> 1.4)
+    nokogiri (1.14.2-x86_64-linux)
+      racc (~> 1.4)
     open-uri (0.3.0)
       stringio
       time
@@ -127,6 +129,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
+    pg (1.4.6)
     pg (1.4.6-x64-mingw-ucrt)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -167,6 +170,7 @@ GEM
       io-console (~> 0.5)
     ruby-rc4 (0.1.5)
     sqlite3 (1.6.1-x64-mingw-ucrt)
+    sqlite3 (1.6.1-x86_64-linux)
     stringio (3.0.5)
     thor (1.2.1)
     time (0.2.1)
@@ -185,6 +189,7 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
